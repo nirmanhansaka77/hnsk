@@ -11,7 +11,7 @@ cmd(
     filename: __filename,
   },
   async (
-    danuwa,
+    hansa,
     mek,
     m,
     {
@@ -40,17 +40,17 @@ cmd(
     }
   ) => {
     try {
-      if (!q) return reply("*Please provide a valid Facebook video URL!* ❤️");
+      if (!q) return reply("*Please provide a valid Facebook video URL! 🚫* ❤️");
 
       const fbRegex = /(https?:\/\/)?(www\.)?(facebook|fb)\.com\/.+/;
       if (!fbRegex.test(q))
-        return reply("*Invalid Facebook URL! Please check and try again.* ☹️");
+        return reply("*Invalid Facebook URL! Please check and try again. 💔* ☹️");
 
-      reply("*Downloading your video...* ❤️");
+      reply("*Downloading your video...* ⬇");
 
       const result = await getFbVideoInfo(q);
       if (!result || (!result.sd && !result.hd)) {
-        return reply("*Failed to download video. Please try again later.* ☹️");
+        return reply("*Failed to download video. Please try again later.  💔* ☹️");
       }
 
       const { title, sd, hd } = result;
@@ -63,18 +63,18 @@ Your fb video
 👻 *Quality*: ${qualityText}
 `;
 
-      await danuwa.sendMessage(
+      await hansa.sendMessage(
         from,
         {
           image: {
-            url: "https://github.com/DANUWA-MD/DANUWA-MD/blob/main/images/fbdownloader.png?raw=true",
+            url: "https://github.com/Hnsk23/hnsk/blob/main/images/HANSA%20md.png?raw=true",
           },
           caption: desc,
         },
         { quoted: mek }
       );
 
-      await danuwa.sendMessage(
+      await hansa.sendMessage(
         from,
         {
           video: { url: bestQualityUrl },
@@ -83,7 +83,7 @@ Your fb video
         { quoted: mek }
       );
 
-      return reply("Thank you for using DANUWA-MD");
+      return reply("Thank you for using HANSA-MD 😝🤍");
     } catch (e) {
       console.error(e);
       reply(`*Error:* ${e.message || e}`);
