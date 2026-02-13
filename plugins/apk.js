@@ -27,7 +27,7 @@ cmd(
       const app = data.datalist.list[0];
       const appSize = (app.size / 1048576).toFixed(2); 
       
-      const caption = `*HANSA-MD APK DOWNLOADER*`;
+      const caption = `*HANSA-MD APK DOWNLOADER*  please wait`;
 
       await test.sendMessage(
         from,
