@@ -115,8 +115,8 @@ cmd({
   desc: "Search and send movies from Sinhalasub.lk",
   category: "download",
   filename: __filename
-}, async (danuwa, mek, m, { from, q, sender, reply }) => {
-  if (!q) return reply(`*🎬 Movie Search Plugin*\nUsage: movie_name\nExample: movie avengers`);
+}, async (hansa, mek, m, { from, q, sender, reply }) => {
+  if (!q) return reply(`*🎬 Movie Search Plugin*\nUsage: movie_name\nExample: movie jangi hora`);
   reply("*🔍 Searching for movies...*");
   const searchResults = await searchMovies(q);
   if (!searchResults.length) return reply("*❌ No movies found!*");
@@ -131,8 +131,8 @@ cmd({
 
 cmd({
   filter: (text, { sender }) => pendingSearch[sender] && !isNaN(text) && parseInt(text) > 0 && parseInt(text) <= pendingSearch[sender].results.length
-}, async (danuwa, mek, m, { body, sender, reply, from }) => {
-  await danuwa.sendMessage(from, { react: { text: "✅", key: m.key } });
+}, async (hansa, mek, m, { body, sender, reply, from }) => {
+  await hansa.sendMessage(from, { react: { text: "✅", key: m.key } });
   const index = parseInt(body.trim()) - 1;
   const selected = pendingSearch[sender].results[index];
   delete pendingSearch[sender];
@@ -142,9 +142,9 @@ cmd({
   msg += `*🎭 Genres:* ${metadata.genres.join(", ")}\n*🎥 Directors:* ${metadata.directors.join(", ")}\n*🌟 Stars:* ${metadata.stars.slice(0,5).join(", ")}${metadata.stars.length>5?"...":""}\n\n`;
   msg += "*🔗 Fetching download links, please wait...*";
   if (metadata.thumbnail) {
-    await danuwa.sendMessage(from, { image: { url: metadata.thumbnail }, caption: msg }, { quoted: mek });
+    await hansa.sendMessage(from, { image: { url: metadata.thumbnail }, caption: msg }, { quoted: mek });
   } else {
-    await danuwa.sendMessage(from, { text: msg }, { quoted: mek });
+    await hansa.sendMessage(from, { text: msg }, { quoted: mek });
   }
   const downloadLinks = await getPixeldrainLinks(selected.movieUrl);
   if (!downloadLinks.length) return reply("*❌ No download links found (<2GB)!*");
@@ -152,13 +152,13 @@ cmd({
   let qualityMsg = "*📥 Available Qualities (Max 2GB):*\n";
   downloadLinks.forEach((d,i) => qualityMsg += `*${i+1}.* ${d.quality} - ${d.size}\n`);
   qualityMsg += `\n*Reply with quality number to receive the movie as a document.*`;
-  await danuwa.sendMessage(from, { text: qualityMsg }, { quoted: mek });
+  await hansa.sendMessage(from, { text: qualityMsg }, { quoted: mek });
 });
 
 cmd({
   filter: (text, { sender }) => pendingQuality[sender] && !isNaN(text) && parseInt(text) > 0 && parseInt(text) <= pendingQuality[sender].movie.downloadLinks.length
-}, async (danuwa, mek, m, { body, sender, reply, from }) => {
-  await danuwa.sendMessage(from, { react: { text: "✅", key: m.key } });
+}, async (hansa, mek, m, { body, sender, reply, from }) => {
+  await hansa.sendMessage(from, { react: { text: "✅", key: m.key } });
   const index = parseInt(body.trim()) - 1;
   const { movie } = pendingQuality[sender];
   delete pendingQuality[sender];
@@ -166,7 +166,7 @@ cmd({
   reply(`*⬇️ Sending ${selectedLink.quality} movie as document...*\nPlease wait.`);
   try {
     const directUrl = getDirectPixeldrainUrl(selectedLink.link);
-    await danuwa.sendMessage(from, {
+    await hansa.sendMessage(from, {
       document: { url: directUrl },
       mimetype: "video/mp4",
       fileName: `${movie.metadata.title.substring(0,50)} - ${selectedLink.quality}.mp4`.replace(/[^\w\s.-]/gi,''),
