@@ -10,11 +10,11 @@ cmd(
     category: "download",
     filename: __filename,
   },
-  async (danuwa, mek, m, { from, q, reply }) => {
+  async (hansa, mek, m, { from, q, reply }) => {
     try {
       if (!q) return reply("❌ *Please provide a Pinterest link.*\n\nExample: `.pinterest https://www.pinterest.com/pin/1234567890`");
 
-      await danuwa.sendMessage(from, { react: { text: "⏳", key: mek.key } });
+      await hansa.sendMessage(from, { react: { text: "⏳", key: mek.key } });
 
       const { data: html } = await axios.get(q, {
         headers: {
@@ -43,7 +43,7 @@ cmd(
 ┃ ────────────────────
 `;
 
-      await danuwa.sendMessage(
+      await hansa.sendMessage(
         from,
         {
           image: { url: mediaUrl },
@@ -52,7 +52,7 @@ cmd(
         { quoted: mek }
       );
 
-      await danuwa.sendMessage(from, { react: { text: "✅", key: mek.key } });
+      await hansa.sendMessage(from, { react: { text: "✅", key: mek.key } });
     } catch (e) {
       console.error("Pinterest Download Error:", e);
       reply("❌ *An error occurred while downloading Pinterest content.*");
