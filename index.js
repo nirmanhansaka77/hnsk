@@ -269,7 +269,7 @@ if (mek.key?.remoteJid === 'status@broadcast') {
     }
   });
 
-  hansa.ev.on('messages.update', async (updates) => {
+  conn.ev.on('messages.update', async (updates) => {
     if (global.pluginHooks) {
       for (const plugin of global.pluginHooks) {
         if (plugin.onDelete) {
