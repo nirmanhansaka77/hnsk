@@ -8,7 +8,7 @@ cmd(
     category: "main",
     filename: __filename,
   },
-  async (danuwa, mek, m, { reply }) => {
+  async (hansa, mek, m, { reply }) => {
     const start = Date.now();
     await reply("🏓 Pinging...");
     const end = Date.now();
